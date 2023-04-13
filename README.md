@@ -114,9 +114,9 @@ By comparing the distribution of control and PD groups within the scatter plot, 
 ### A. The twelve most abundant phyla:
 
 <p align="center">
-  https://github.com/Andrej-Hric/UCL_Project_Metagenomics/blob/main/Code_Files_Figures/fig5.png
+  <img src="https://github.com/Andrej-Hric/UCL_Project_Metagenomics/blob/main/Code_Files_Figures/fig5.png" alt="Most Abundant Phyla Figure">
 </p>
-
+  
 This part of the figure showcases the twelve most abundant bacterial phyla found in both control and PD groups.
 The data is presented in a bar chart format, with the x-axis representing the phyla and the y-axis representing the relative abundance levels.
 Differences in the relative abundance of specific phyla between control and PD groups can be observed, providing insights into the potential association between gut microbiome composition and Parkinson's disease.
@@ -124,7 +124,7 @@ Differences in the relative abundance of specific phyla between control and PD g
 ### B. Abundance of Actinobacteria in control and PD groups:
 
 <p align="center">
-  https://github.com/Andrej-Hric/UCL_Project_Metagenomics/blob/main/Code_Files_Figures/fig5a.png
+  <img src="https://github.com/Andrej-Hric/UCL_Project_Metagenomics/blob/main/Code_Files_Figures/fig5a.png" alt= "Actinobacteria Control and PD group abundance">
 </p>
 
 This part of the figure focuses on the abundance of the Actinobacteria phylum in control and PD groups.
@@ -134,7 +134,7 @@ A comparison of the abundance levels of Actinobacteria between control and PD gr
 ### C. Abundance of Verrucomicrobia in control and PD groups:
 
 <p align="center">
-  https://github.com/Andrej-Hric/UCL_Project_Metagenomics/blob/main/Code_Files_Figures/fig5b.png
+ <img src="https://github.com/Andrej-Hric/UCL_Project_Metagenomics/blob/main/Code_Files_Figures/fig5b.png" alt="Verrucomicrobia Control and PD group Abundance">
 </p>
 
 This part of the figure examines the abundance of the Verrucomicrobia phylum in control and PD groups.
