@@ -1,6 +1,8 @@
 # UCL_Project_Metagenomics
 Undergraduate research project in metagenomics
 
+!! It is important to note that this is a work during my undergradaute degree an it may contain mistakes as my scripting skills were just at beginner level!!
+
 In this GIT repository are stored the files used and figures produced for the Advanced research project in metagenomics for BIOC0023 course at UCL (3rd year module)
 
 Notes for files in the project folder:
