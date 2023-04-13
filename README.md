@@ -92,26 +92,20 @@ Comparing the abundance levels of Verrucomicrobia between control and PD groups 
 <details>
 <summary> Quality Control of Sequencing Data </summary>
 
-<p align="center">
-  <img src="https://github.com/Andrej-Hric/UCL_Project_Metagenomics/blob/main/Code_Files_Figures/fig1.png" alt="Quality Control Figure">
-</p>
-
 This figure displays the quality control of the sequencing data obtained from the samples in the study. Proper quality control is essential for obtaining accurate and reliable results in microbiome research.
 
 The figure presents a visualization of the distribution of sequence quality scores across the length of the sequenced reads. The x-axis represents the position in the read, and the y-axis represents the quality score.
 
 A higher quality score indicates a lower probability of error in the base call. The quality scores are color-coded to provide a clear understanding of the overall quality of the sequencing data. This information is crucial for ensuring the reliability of the data and the conclusions drawn from it.
+<p align="center">
+  <img src="https://github.com/Andrej-Hric/UCL_Project_Metagenomics/blob/main/Code_Files_Figures/fig1.png" alt="Quality Control Figure">
+</p>
 
-Replace "path/to/quality_control_figure.png" with the actual path to the quality control figure image file.
 
 </details>
 
 <details>
 <summary> Alpha Diversity in Control and PD Groups </summary>
-
-<p align="center">
-  <img src="path/to/alpha_diversity_figure.png" alt="Alpha Diversity Figure">
-</p>
 
 This figure showcases the alpha diversity of the gut microbiomes in control and PD groups. Alpha diversity is a measure of the diversity within individual microbial communities and is commonly used to compare the richness and evenness of microbial populations.
 
@@ -119,7 +113,9 @@ The data is visualized using box plots, with the x-axis representing the two gro
 
 By comparing the alpha diversity between control and PD groups, the figure helps to identify potential differences in the richness and evenness of the gut microbiomes between the two groups. This information may provide insights into the association between gut microbiome composition and Parkinson's disease.
 
-Replace "path/to/alpha_diversity_figure.png" with the actual path to the alpha diversity figure image file.
+<p align="center">
+  <img src="https://github.com/Andrej-Hric/UCL_Project_Metagenomics/blob/main/Code_Files_Figures/AlphaDiv.png" alt="Alpha Diversity Figure">
+</p>
 
 </details>
 
