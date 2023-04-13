@@ -14,7 +14,7 @@ In this Git repository, the files used and figures produced for the Advanced Res
 ## Repository Structure
 
 - Code for this project is available as `.ipynb` file (`Andrej_QIIME2_PE_ENA.ipynb`)
-- The code for visualisation in R as .RMD file (Bioc0023_2.Rmd)
+- The code for visualisation in R as `.RMD` file (`Bioc0023_2.Rmd`)
 
 Instruction: Run Andrej_QIIME2_PE_ENA.ipynb following the steps in the Jupyter Notebook, afterwards run Bioc0023_2.Rmd in R studio.
 
