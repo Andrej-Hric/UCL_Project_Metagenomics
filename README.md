@@ -42,51 +42,8 @@ This study investigated gut microbiome differences between Parkinson's disease (
 </div>
 
 
+### Figures
 
-
-<div align="center">
-Figures
-</div>
-
-<details>
-<summary>Phyla abundance in control and PD groups</summary>
-<br>
-
-*Overall, the figure serves to highlight the differences in phyla abundance between control and PD groups, pointing to potential targets for future research, diagnostic markers, or therapeutic interventions.
-*The figure presents a comparison of the relative abundance of bacterial phyla in the gut microbiomes of control and PD groups.
-*Parts A, B, and C each focus on different aspects of phyla abundance:
-
-### A. The twelve most abundant phyla:
-
-<p align="center">
-  https://user-images.githubusercontent.com/128257431/231890316-d0760f39-3a0f-4da0-b4bd-0778f33518f9.png
-</p>
-
-This part of the figure showcases the twelve most abundant bacterial phyla found in both control and PD groups.
-The data is presented in a bar chart format, with the x-axis representing the phyla and the y-axis representing the relative abundance levels.
-Differences in the relative abundance of specific phyla between control and PD groups can be observed, providing insights into the potential association between gut microbiome composition and Parkinson's disease.
-
-### B. Abundance of Actinobacteria in control and PD groups:
-
-<p align="center">
-  https://user-images.githubusercontent.com/128257431/231890492-605580c2-f95e-4fe0-81a2-46974ce26df4.png
-</p>
-
-This part of the figure focuses on the abundance of the Actinobacteria phylum in control and PD groups.
-A bar chart is used to visualize the data, with the x-axis representing the two groups (control and PD) and the y-axis representing the abundance levels.
-A comparison of the abundance levels of Actinobacteria between control and PD groups may help identify its potential role in the disease.
-
-### C. Abundance of Verrucomicrobia in control and PD groups:
-
-<p align="center">
-  https://user-images.githubusercontent.com/128257431/231890680-a30d3f42-3abf-497c-9f93-b347cc1466fc.png)
-</p>
-
-This part of the figure examines the abundance of the Verrucomicrobia phylum in control and PD groups.
-The data is presented in a bar chart, with the x-axis representing the two groups (control and PD) and the y-axis representing the abundance levels.
-Comparing the abundance levels of Verrucomicrobia between control and PD groups may provide insights into its possible involvement in Parkinson's disease.
-
-</details>
 
 
 <details>
@@ -146,5 +103,44 @@ By comparing the distribution of control and PD groups within the scatter plot, 
 
 </details>
 
+<details>
+<summary>Phyla abundance in control and PD groups</summary>
+<br>
+
+*Overall, the figure serves to highlight the differences in phyla abundance between control and PD groups, pointing to potential targets for future research, diagnostic markers, or therapeutic interventions.
+*The figure presents a comparison of the relative abundance of bacterial phyla in the gut microbiomes of control and PD groups.
+*Parts A, B, and C each focus on different aspects of phyla abundance:
+
+### A. The twelve most abundant phyla:
+
+<p align="center">
+  https://user-images.githubusercontent.com/128257431/231890316-d0760f39-3a0f-4da0-b4bd-0778f33518f9.png
+</p>
+
+This part of the figure showcases the twelve most abundant bacterial phyla found in both control and PD groups.
+The data is presented in a bar chart format, with the x-axis representing the phyla and the y-axis representing the relative abundance levels.
+Differences in the relative abundance of specific phyla between control and PD groups can be observed, providing insights into the potential association between gut microbiome composition and Parkinson's disease.
+
+### B. Abundance of Actinobacteria in control and PD groups:
+
+<p align="center">
+  https://user-images.githubusercontent.com/128257431/231890492-605580c2-f95e-4fe0-81a2-46974ce26df4.png
+</p>
+
+This part of the figure focuses on the abundance of the Actinobacteria phylum in control and PD groups.
+A bar chart is used to visualize the data, with the x-axis representing the two groups (control and PD) and the y-axis representing the abundance levels.
+A comparison of the abundance levels of Actinobacteria between control and PD groups may help identify its potential role in the disease.
+
+### C. Abundance of Verrucomicrobia in control and PD groups:
+
+<p align="center">
+  https://user-images.githubusercontent.com/128257431/231890680-a30d3f42-3abf-497c-9f93-b347cc1466fc.png)
+</p>
+
+This part of the figure examines the abundance of the Verrucomicrobia phylum in control and PD groups.
+The data is presented in a bar chart, with the x-axis representing the two groups (control and PD) and the y-axis representing the abundance levels.
+Comparing the abundance levels of Verrucomicrobia between control and PD groups may provide insights into its possible involvement in Parkinson's disease.
+
+</details>
 
 
