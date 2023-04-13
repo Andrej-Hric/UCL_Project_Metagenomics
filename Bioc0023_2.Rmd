@@ -1,0 +1,353 @@
+---
+title: "Bioc0023 figures"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+We need these packages
+```{r}
+install.packages("BiocManager")
+install.packages("tidyverse")
+install.packages("vegan")
+install.packages("phyloseq")
+install.packages("patchwork")
+install.packages("devtools")
+install.packages("lmerTest")
+install.packages("nlme")
+```
+
+These ones are from bioconductor
+```{r}
+BiocManager::install("microbiome")
+BiocManager::install("edgeR")
+```
+
+This one is found on Github
+```{r}
+devtools::install_github("jbisanz/qiime2R")
+```
+
+Finally load the pacakages
+```{r}
+library(tidyverse)
+library(qiime2R)
+library(phyloseq)
+library(patchwork)
+library(vegan)
+library(cowplot)
+library(broom)
+library(rstatix)
+library(emmeans)
+library(ggpubr)
+library(edgeR)
+```
+
+#Figure 1
+This is the description of the study, the metadata, how many groups, and something about the quality of the study
+
+```{r}
+metadata<-read_tsv("AFmetadata.txt")
+metadata$Group<-factor(metadata$Group)
+
+```
+
+```{r}
+feature_table<-read_qza("table-deblur.qza")
+feature_table<-feature_table$data
+reads<-data.frame(colSums(feature_table))
+reads$`sample-id`<-rownames(reads)
+features<-read_qza("observed_features_vector.qza")
+features<-features$data %>% rownames_to_column("sample-id")
+reads<-features%>% left_join(reads)
+```
+```{r}
+reads%>%ggplot(aes(x = log2(colSums.feature_table.), y = observed_features)) +geom_point() +geom_smooth(method="lm", se = FALSE) + labs(x = "Reads", y = "Observed Richness")+theme_bw()
+ggsave("fig1.png")
+```
+
+#Figure 2 Alpha Diversity 
+
+Two measures of alpha diversity
+
+```{r}
+shannon<-read_qza("shannon_vector.qza")
+faith<-read_qza("faith_pd_vector.qza")
+shannon<-shannon$data %>% rownames_to_column("sample-id")
+faith<-faith$data %>% rownames_to_column("sample-id")
+alpha<-metadata %>% left_join(shannon)
+alpha<-alpha %>% left_join(faith)
+```
+
+
+```{r}
+alpha<-alpha %>%filter(Group!="L")%>%filter(!is.na(shannon_entropy))
+alpha$time<-recode(alpha$time_point, baseline="0", followup="1")
+#alpha$time<-factor(alpha$time, levels = c("0", "1"))
+alpha<-alpha %>% group_by(sample_title) %>% filter( n() > 1 )
+fig2a<-alpha %>%
+  ggplot(aes(x=time, y=shannon_entropy, color=Group,group=sample_title))+geom_line(linetype="dashed", size=0.5)+geom_point(size=1, alpha=0.7)+scale_color_manual(values=c("black", "red"))+
+  xlab("Group") +
+  ylab("Shannon Diversity")+theme_cowplot(12)+facet_wrap(.~Group)
+ggsave("fig2a.png")
+ggsave("fig2a.pdf")
+fig2b<-alpha %>%
+  ggplot(aes(x=time, y=faith_pd, color=Group,group=sample_title ))+geom_line(linetype="dashed", size=0.5)+geom_point(size=1, alpha=0.7)+scale_color_manual(values=c("black", "red"))+
+  xlab("Group") +
+  ylab("Faiths PD") +
+  theme_cowplot(12)+theme(legend.position="none")+facet_wrap(.~Group)
+
+
+ggsave("fig2b.png")
+ggsave("fig2b.pdf")#or pdf
+```
+
+Stats example, pairwise comparisons
+```{r}
+alpha %>%filter(!is.na(faith_pd)) %>% kruskal.test(faith_pd~Group, data= .)
+alpha %>%filter(!is.na(shannon_entropy))%>%kruskal.test(shannon_entropy~Group, data= .)
+pairwise.wilcox.test(alpha$shannon_entropy, alpha$Group, p.adjust.method = "BH")
+pairwise.wilcox.test(alpha$faith_pd, alpha$Group, p.adjust.method = "BH")
+```
+
+```{r}
+library(nlme)
+library(lmerTest)
+#EFFECT OF TIME p value 0.0873 
+model.A<-lmer(shannon_entropy ~ time +(1|subject), data=alpha, REML=FALSE)
+summary(model.A)
+
+#EFFECT OF TIME and GROUP p value 
+#Time           0.107
+#Group          0.725    
+#timex Group    0.559 
+model.B<-lmer(shannon_entropy ~ time*Group+(1|subject), data=alpha, REML=FALSE)
+summary(model.B)
+```
+
+#Figure 3
+Two measures of Beta diversity
+
+add the pcoa results, need to change sample-id to SampleID first
+```{r}
+colnames(metadata)[colnames(metadata) == 'sample-id'] <- 'SampleID'
+jac<-read_qza("jaccard_pcoa_results.qza")
+bray<-read_qza("bray_curtis_pcoa_results.qza")
+jac<-jac$data$Vectors%>%dplyr::select(SampleID, PC1, PC2)%>%left_join(metadata)
+bray<-bray$data$Vectors%>%dplyr::select(SampleID, PC1, PC2)%>%left_join(metadata)
+```
+
+
+```{r}
+fig3a<-jac%>%filter(Group!="L") %>%ggplot(aes(x=PC1, y=PC2, color=Group, shape=Group)) +
+  geom_point(alpha=0.6,size=2)+theme_cowplot(12)+theme(legend.position="none")
+fig3b<-bray%>%filter(Group!="L")%>%ggplot(aes(x=PC1, y=PC2, color=Group, shape=Group)) +
+  geom_point(alpha=0.6,size=2)+theme_cowplot(12)
+fig3plots<-fig3a+fig3b
+fig3plots+plot_annotation(tag_levels = 'A', 'B', title = NULL, subtitle = "Jaccard Distance and Bray Curtis")
+ggsave("fig3.png") #or pdf
+```
+
+
+For the PERMANOVA we need Phyloseq or you can use the Pvalue from your QIIME2 outputs
+```{r}
+physeq<-qza_to_phyloseq(features="rarefied_table.qza", taxonomy = "taxonomy.qza", tree = "rooted-tree.qza", metadata="AFmetadata.txt")
+
+```
+
+
+```{r}
+pseq.rel <- microbiome::transform(physeq, "compositional")
+otu <- microbiome::abundances(pseq.rel)
+meta <- microbiome::meta(pseq.rel)
+```
+Does diet have a significant effect on overall gut microbiota composition
+```{r}
+permanova <- adonis(t(otu) ~ Group,
+               data = meta, permutations=999, method = "bray")
+permanova
+```
+
+
+
+Check that variance homogeneity assumptions hold
+```{r}
+dist <- vegdist(t(otu))
+anova(betadisper(dist, meta$Group))
+
+```
+
+#Figure 4
+#Bar plot fig4a
+This bar plot makes an average across the groups in your data.
+If you get an error "in select"restart R (session-restart R), load Tidyverse and Phyloseq
+```{r}
+SVs<-qiime2R::read_qza("rarefied_table.qza")$data
+SVs<-apply(SVs, 2, function(x) x/sum(x)*100)
+taxonomy<-qiime2R::read_qza("taxonomy.qza")$data %>%qiime2R::parse_taxonomy()
+taxasums<-qiime2R::summarize_taxa(SVs, taxonomy)$Genus
+tax<-t(taxasums)
+tax<-data.frame(tax)
+tax2<-rownames_to_column(tax, var="SampleID")%>%as_tibble()
+tax3<-tax2
+```
+
+
+```{r}
+alpha2<-jac
+tax3$group<-alpha2$Group
+tax3<-tax3%>%filter(tax3$group!="L")
+avetax<-tax3%>%filter(!is.na(group))%>%group_by(group) %>%summarise_all(mean, na.rm=TRUE)
+avetax<-avetax[,-2]
+```
+
+```{r}
+avetax<-gather(avetax, key=genus, value=abundance, 2:(ncol(avetax)))
+avetax<-avetax%>% mutate(genus=replace(genus, abundance<3, "Other")) %>% as.data.frame()
+```
+
+change genus to a factor
+```{r}
+avetax$genus<-factor(avetax$genus)
+```
+
+Different colours
+```{r}
+fig4a<-avetax%>%ggplot(aes(x=group, y=abundance, fill=genus)) + geom_bar(stat="identity")+theme_bw()+scale_y_continuous(limits = c(0, 104), expand = c(0,0))
+fig4a
+ggsave("fig4a.png", width = 12, height=8 ) #or pdf
+```
+```{r}
+fig4a<-avetax%>%ggplot(aes(x=group, y=abundance, fill=genus)) + geom_bar(stat="identity")+theme_bw()+scale_y_continuous(limits = c(0, 104), expand = c(0,0))+theme(legend.position="none")+
+    theme(text = element_text(size=8),
+        axis.text.x = element_text(angle=45, hjust=1)) 
+fig4a
+ggsave("fig4anoleg.png", width = 12, height=8 ) #or pdf
+```
+
+
+#Tree Fig4b
+```{r}
+physeq2 = prune_taxa(taxa_names(physeq)[1:200], physeq)
+physeq2<- subset_samples(physeq2,
+sample_data(physeq2)$Group!="L")
+fig4b<-plot_tree(physeq2, nodelabf=nodeplotboot(), ladderize="left", color="Class", shape= "Group")
+fig4b
+ggsave("fig4b.png") #or pdf
+```
+
+
+#EdgeR abundance testing NOT READY! SKIP TO FIG5, needs to account for baseline.
+Fig4c
+```{r}
+physeq_edge<-qza_to_phyloseq(features="rarefied_table.qza", taxonomy = "taxonomy.qza", tree = "rooted-tree.qza", metadata="AFmetadata.txt")
+physeq_edge <- subset_samples(physeq_edge,
+sample_data(physeq_edge)$Group!="P")
+#physeq_edge <- subset_samples(physeq_edge,
+#sample_data(physeq_edge)$Group!="B")
+physeq_edge <- subset_samples(physeq_edge,
+sample_data(physeq_edge)$time_point!="")
+```
+```{r}
+meta <- microbiome::meta(physeq_edge)
+OTU<-otu_table(physeq_edge)
+OTU<-data.frame(OTU)
+meta$time_point<-factor(meta$time_point)
+design<-model.matrix(~meta$subject+meta$time_point)
+y <- DGEList(counts=OTU)
+y$taxa<-taxonomy
+y$taxa<-data.frame(y$taxa)
+```
+
+```{r}
+keep<-rowSums(cpm(y) > 0.25) >=2
+y <- y[keep, , keep.lib.sizes=FALSE]
+summary(keep)
+```
+
+```{r}
+y <- calcNormFactors(y)
+y <- estimateDisp(y, design, robust=TRUE)
+plotBCV(y)
+fit <- glmFit(y, design)
+groupdiff<- glmLRT(fit)
+```
+```{r}
+is.de1 <- decideTestsDGE(groupdiff)
+summary(is.de1)
+sig_taxa<-data.frame(topTags(groupdiff, n=Inf))
+```
+
+
+
+```{r}
+taxonomy$feature<-rownames(taxonomy)
+sig_taxa$feature<-rownames(sig_taxa)
+sig_taxa<-sig_taxa%>%left_join(taxonomy)
+```
+Figrur 4C is PD and 4D control
+```{r}
+sig <- sig_taxa$FDR < 0.05 
+fig4d<-sig_taxa%>%ggplot()+geom_point((aes(x=logFC, y=-log10(PValue),color=(sig), alpha=0.7)))+scale_colour_manual(values=c("black", "red"))+theme_bw()
+fig4d
+ggsave("fig4d.pdf")
+ggsave("fig4d.png")
+```
+
+#Figure 5
+#abundance plots
+```{r}
+ps_phylum <- phyloseq::tax_glom(physeq, "Phylum")
+phyloseq::taxa_names(ps_phylum) <- phyloseq::tax_table(ps_phylum)[, "Phylum"]
+phyloseq::otu_table(ps_phylum)[1:5, 1:5]
+```
+
+
+```{r}
+t<-phyloseq::psmelt(ps_phylum)
+fig5<-t%>%filter(Group!="L")%>%
+ggplot(aes(Group, Abundance)) +
+  geom_boxplot(outlier.shape  = NA) +
+  geom_jitter(aes(color = OTU), height = 0, width = .2) +
+  labs(x = "", y = "Abundance\n") +
+  facet_wrap(~ OTU, scales = "free")+theme_bw()
+fig5
+ggsave("fig5.png")
+```
+
+```{r}
+library(purrr)
+t$OTU<-factor(t$OTU)
+levels(t$OTU)
+t%>%
+  split(.$OTU) %>%
+  map(~ kruskal.test(Abundance ~ Group, data = .x)) 
+```
+
+
+```{r}
+fig5a<-t%>%filter(Group!="L")%>%filter(OTU =="Actinobacteria")%>%
+ggplot(aes(Group, Abundance, fill=Group)) +
+  geom_boxplot(outlier.shape  = NA) +
+  geom_jitter(height = 0, width = .2) +
+  labs(x = "", y = "Abundance\n")+theme_cowplot(12)
+fig5a
+ggsave("fig5a.png") #or pdf
+```
+```{r}
+fig5b<-t%>%filter(Group!="L")%>%filter(OTU =="Verrucomicrobia")%>%
+ggplot(aes(Group, Abundance, fill=Group)) +
+  geom_boxplot(outlier.shape  = NA) +
+  geom_jitter(height = 0, width = .2) +
+  labs(x = "", y = "Abundance\n")+theme_bw()+
+    theme(text = element_text(size=8),
+        axis.text.x = element_text(angle=45, hjust=1)) 
+fig5b
+ggsave("fig5b.png") #or pdf
+```
+
+
+
+
