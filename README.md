@@ -7,7 +7,7 @@
 
 Undergraduate research project in metagenomics
 
-> ⚠️ **Disclaimer:** This project was completed during my undergraduate degree and may contain mistakes as my scripting skills were just at beginner level.
+> ⚠️ **Disclaimer:** This project was completed during my undergraduate degree and may contain mistakes as my scripting skills were just at beginner level and the representations in figures have space for improvement. I will update this repository after completing my Master degree in Bioinformatics when I have more time.
 
 In this Git repository, the files used and figures produced for the Advanced Research Project in Metagenomics for BIOC0023 course at UCL (3rd-year module) are stored.
 
