@@ -14,7 +14,7 @@ In this Git repository, the files used and figures produced for the Advanced Res
 ## Repository Structure
 
 - Code for this project is available as `.ipynb` file (`Andrej_QIIME2_PE_ENA.ipynb`)
-- The code for R, along with all the generated data and figures produced for this paper, is in: `Code_Files_Figures`
+- The code for visualisation in R as .RMD file (Bioc0023_2.Rmd)
 
 ## Project Information
 
