@@ -114,7 +114,7 @@ By comparing the distribution of control and PD groups within the scatter plot, 
 ### A. The twelve most abundant phyla:
 
 <p align="center">
-  https://user-images.githubusercontent.com/128257431/231890316-d0760f39-3a0f-4da0-b4bd-0778f33518f9.png
+  https://github.com/Andrej-Hric/UCL_Project_Metagenomics/blob/main/Code_Files_Figures/fig5.png
 </p>
 
 This part of the figure showcases the twelve most abundant bacterial phyla found in both control and PD groups.
@@ -124,7 +124,7 @@ Differences in the relative abundance of specific phyla between control and PD g
 ### B. Abundance of Actinobacteria in control and PD groups:
 
 <p align="center">
-  https://user-images.githubusercontent.com/128257431/231890492-605580c2-f95e-4fe0-81a2-46974ce26df4.png
+  https://github.com/Andrej-Hric/UCL_Project_Metagenomics/blob/main/Code_Files_Figures/fig5a.png
 </p>
 
 This part of the figure focuses on the abundance of the Actinobacteria phylum in control and PD groups.
@@ -134,7 +134,7 @@ A comparison of the abundance levels of Actinobacteria between control and PD gr
 ### C. Abundance of Verrucomicrobia in control and PD groups:
 
 <p align="center">
-  https://user-images.githubusercontent.com/128257431/231890680-a30d3f42-3abf-497c-9f93-b347cc1466fc.png)
+  https://github.com/Andrej-Hric/UCL_Project_Metagenomics/blob/main/Code_Files_Figures/fig5b.png
 </p>
 
 This part of the figure examines the abundance of the Verrucomicrobia phylum in control and PD groups.
