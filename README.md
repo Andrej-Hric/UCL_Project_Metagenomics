@@ -2,10 +2,10 @@
 
 ![ucl-banner-land-black-rgb-2](https://user-images.githubusercontent.com/128257431/231888788-6d0e133b-edf5-4b0e-aaac-2d332f867deb.gif)
 
-# UCL Project Metagenomics
+# UCL Project Metagenomics 2020
 </div>
 
-Undergraduate research project in metagenomics 2020
+Undergraduate research project in metagenomics 
 
 > ⚠️ **Disclaimer:** This project was completed during my undergraduate degree and may contain mistakes as my scripting skills were just at beginner level and the representations in figures have space for improvement. I will update this repository after completing my Master degree in Bioinformatics when I have more time. This is only used to display what my level was during my Undergraduate degree.
 
